@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+	/* Custom brand colors */
+	--color-Night: #0A0A0A;
+	--color-EerieBlack: #191919;
+	--color-Timberwolf: #CED0CE;
+	--color-Platinum: #E6E8E6;
+	--color-White: #FFFFFF;
+	--color-Vermilion: #F04939;
+	--color-Zinc: #FAFAFA;
+	--color-Black: #000000;
+	--color-Gray: #A1A1A1;
+	--color-skyBlue: #69D7F2;
+	--color-limeCream: #dcf763;
+	--color-Parchment: #EDEDE9;
+
+
+	/* Tailwind color mappings */
+	--color-night: var(--color-Night);
+	--color-eerie-black: var(--color-EerieBlack);
+	--color-timberwolf: var(--color-Timberwolf);
+	--color-platinum: var(--color-Platinum);
+	--color-white: var(--color-White);
+	--color-vermilion: var(--color-Vermilion);
+	--color-zinc: var(--color-Zinc);
+	--color-black: var(--color-Black);
+	--color-gray: var(--color-Gray);
+	--color-blue-lagoon: var(--color-blueLagoon);
+	--color-parchment: var(--color-Parchment);
+}
+
+* {
+	font-family: 'Geist', sans-serif;
+}
+
+.font-jetbrains-mono,
+.font-jetbrains-mono * {
+	font-family: 'JetBrains Mono', monospace;
+}
+
+.mesh-background {
+	position: absolute;
+	inset: 0% 0 0 0;
+	z-index: -1;
+	background:
+		radial-gradient(ellipse 75% 75% at 50% 0%, rgba(105, 215, 242, 0.15), transparent),
+		radial-gradient(ellipse 50% 50% at 50% 0%, rgba(105, 215, 242, 0.1), transparent),
+		radial-gradient(ellipse 25% 25% at 50% 0%, rgba(105, 215, 242, 0.08), transparent);
+}
+
+#terminal-container .terminal-input:focus,
+#terminal-container .terminal-input:focus-visible {
+	outline: none !important;
+	outline-width: 0 !important;
+	outline-style: none !important;
+	box-shadow: none !important;
+	border: none !important;
+}

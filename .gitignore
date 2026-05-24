@@ -1,0 +1,72 @@
+# build output
+dist/
+
+# stray SVG assets at project root (use inline SVG in components instead)
+*-svgrepo-com.svg
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# environment variables
+.env
+.env.production
+.env.local
+.env.*.local
+
+# macOS-specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows-specific files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# IDE - JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+out/# IDE - VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json# IDE - Other
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace# OS generated files
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes# Temporary files
+*.tmp
+*.temp
+*.log
+.cache/
+.parcel-cache/

@@ -1,0 +1,174 @@
+---
+// Terminal component wrapper
+---
+
+<div id="terminal-container" class="terminal-container"></div>
+
+<script>
+	import { Terminal } from './terminal';
+	
+	// Initialize terminal when DOM is ready
+	function initTerminal() {
+		const container = document.getElementById('terminal-container');
+		if (container) {
+			new Terminal(container);
+		}
+	}
+
+	// Wait for DOM to be ready
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initTerminal);
+	} else {
+		initTerminal();
+	}
+</script>
+
+<style>
+	.terminal-container {
+		width: 100%;
+		min-width:1080px;
+		max-width: 1280px;
+		background-color: rgba(10, 10, 10, 0.95);
+		backdrop-filter: blur(100px);
+		-webkit-backdrop-filter: blur(100px);
+		border: 2px solid rgba(105, 215, 242, 0.3);
+		border-radius: 20px;
+		padding: 20px;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 14px;
+		color: #ffffff;
+		caret-color: #69D7F2;
+		caret-shape: block;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		overflow-y: auto;
+		height: 60vh;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+	}
+
+	.terminal-output {
+		flex: 1;
+		min-height: 0;
+		/* overflow-y: scroll;
+		overflow-x: hidden;
+		overflow: auto; */
+		margin-bottom: 10px;
+		line-height: 1.6;
+	}
+
+	.terminal-output::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	:global(#terminal-output) {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+:global(.terminal-line.terminal-banner) {
+  white-space: pre;
+  word-wrap: normal;
+}
+
+	.terminal-output::-webkit-scrollbar-track {
+		background: rgba(105, 215, 242, 0.1);
+		border-radius: 4px;
+	}
+
+	.terminal-output::-webkit-scrollbar-thumb {
+		background: rgba(105, 215, 242, 0.3);
+		border-radius: 4px;
+	}
+
+	.terminal-output::-webkit-scrollbar-thumb:hover {
+		background: rgba(105, 215, 242, 0.5);
+	}
+
+	.terminal-line {
+		margin-bottom: 4px;
+		word-wrap: break-word;
+	}
+
+	:global(.terminal-line.command) {
+		color: #69d7f2 !important;
+	}
+
+	.terminal-input-line {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	:global(.terminal-prompt) {
+		color: #69D7F2 !important;
+		flex-shrink: 0;
+	}
+
+	.terminal-input {
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance:none;
+		background: transparent;
+		border: 0px;
+		border-color: transparent;
+		outline: none;
+		box-shadow: none;
+		color: #69D7F2;
+		-webkit-text-fill-color: #69D7F2;
+		caret-shape: block;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 14px;
+		flex: 1;
+		min-width: 20px;
+		caret-color: #69D7F2;
+	}
+
+	.terminal-input:focus,
+	.terminal-input:focus-visible {
+		outline: none !important;
+		outline-width: 0 !important;
+		outline-style: none !important;
+		box-shadow: none !important;
+		border: none !important;
+	}
+
+	/* Higher specificity so browser default focus ring is overridden (e.g. Safari) */
+	#terminal-container .terminal-input:focus,
+	#terminal-container .terminal-input:focus-visible {
+		outline: none !important;
+		outline-width: 0 !important;
+		outline-style: none !important;
+		box-shadow: none !important;
+		border: none !important;
+	}
+
+	.terminal-input::placeholder {
+		color: rgba(105, 215, 242, 0.5);
+	}
+
+	/* Optional: Add a visual indicator when terminal is active */
+	.terminal-container:focus-within .terminal-prompt {
+		text-shadow: 0 0 8px rgba(105, 215, 242, 0.5);
+	}
+
+	@keyframes blink {
+		0%, 50% {
+			opacity: 1;
+		}
+		51%, 100% {
+			opacity: 0;
+		}
+	}
+
+	/* Focus state */
+	.terminal-container:focus-within {
+		border-color: rgba(105, 215, 242, 0.6);
+		box-shadow: 0 4px 20px rgba(105, 215, 242, 0.2);
+	}
+</style>
+

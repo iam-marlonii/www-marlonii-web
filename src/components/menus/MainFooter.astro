@@ -1,0 +1,144 @@
+---
+import { iconMap } from '../../config/icons';
+import MarlonIIColorLogo from '../../assets/logos/marlonii-ColorLogo.svg?url';
+
+interface ColumnLink {
+    title: string;
+    href: string;
+    external?: boolean;
+}
+
+interface SocialLink extends ColumnLink {
+    icon: string;
+    ariaLabel: string;
+}
+
+interface FooterColumn {
+    title: string;
+    items: ColumnLink[] | SocialLink[];
+    isSocial?: boolean;
+}
+
+const footerColumns: FooterColumn[] = [
+    {
+        title: "Me",
+        items: [
+            { title: "About", href: "/about" },
+            { title: "Resume", href: "/resume" },
+            { title: "Contact", href: "/contact" },
+            { title: "Cheesecake", href: "/cheesecake" },
+        ]
+    },
+    {
+        title: "Resources",
+        items: [
+            { title: "Blog", href: "/blog" },
+            { title: "Tools", href: "/tools" },
+            { title: "Templates", href: "/templates" },
+        ]
+    },
+    {
+        title: "Projects",
+        items: [
+            { title: "All Projects", href: "/projects" },
+            { title: "GitChem", href: "https://the7thlab.com/projects/gitchem" },
+            { title: "CRM.1", href: "https://the7thlab.com/projects/crm-dot-one" },
+            { title: "py_glades", href: "https://the7thlab.com/projects/py-glades" }
+        ]
+    },
+    {
+        title: "Social",
+        isSocial: true,
+        items: [
+            { title: "GitHub", href: "https://github.com/the7thlab", icon: "github", ariaLabel: "GitHub", external: true },
+            { title: "Twitter", href: "https://twitter.com/the7thlab", icon: "twitter", ariaLabel: "Twitter", external: true },
+            { title: "Instagram", href: "https://instagram.com/the7thlab", icon: "instagram", ariaLabel: "Instagram", external: true },
+            { title: "YouTube", href: "https://youtube.com/@the7thlab", icon: "youtube", ariaLabel: "YouTube", external: true },
+            { title: "LinkedIn", href: "https://linkedin.com/company/the-7th-lab", icon: "linkedin", ariaLabel: "LinkedIn", external: true }
+        ] as SocialLink[]
+    }
+];
+---
+
+<footer class="w-full border-t-[0.5px] border-(--color-skyBlue) font-jetbrains-mono">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+            
+            <!-- Logo Column -->
+            <div class="md:col-span-1">
+                <a href="/" class="flex items-center">
+                    <img
+                        src={MarlonIIColorLogo}
+                        alt="Marlon Ausby Junior Logo in Blue"
+                        class="h-15 w-auto hover:opacity-70 transition-opacity duration-200"
+                    />
+                </a>
+            </div>
+
+            <!-- Dynamic Columns -->
+            {footerColumns.map((column) => (
+                <div class="md:col-span-1">
+                    <h3 class="text-sm mb-4">
+                        {column.title}
+                    </h3>
+                    {column.isSocial ? (
+                        <div class="flex flex-col space-y-3">
+                            {(column.items as SocialLink[]).map((item) => ( 
+                                <a 
+                                    href={item.href}
+                                    class="text-[#a1a1a1] hover:text-white transition-colors flex items-center space-x-3"
+                                    aria-label={item.ariaLabel}
+                                    target={item.external ? "_blank" : undefined}
+                                    rel={item.external ? "noopener noreferrer" : undefined}
+                                >
+                                    {iconMap[item.icon] && (
+                                        <span class="h-5 w-5 flex items-center" set:html={iconMap[item.icon]} />
+                                    )}
+                                    <span class="text-sm">{item.title}</span>
+                                </a>
+                            ))}
+                        </div>
+                    ) : (
+                        <ul class="space-y-3">
+                            {column.items.map((item) => (
+                                <li>
+                                    <a 
+                                        href={item.href} 
+                                        class="text-sm text-[#a1a1a1] hover:text-white transition-colors"
+                                        target={item.external ? "_blank" : undefined}
+                                        rel={item.external ? "noopener noreferrer" : undefined}
+                                    >
+                                        {item.title}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            ))}
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="mt-12 pt-8 border-t-[0.5px] border-(--color-skyBlue)">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <p class="text-sm text-[#a1a1a1]">
+                    2026 Marlon Ausby II
+                </p>
+                <div class="flex space-x-6 text-sm text-[#a1a1a1]">
+                    <a href="/privacy" class="hover:text-white transition-colors">
+                        Privacy Policy
+                    </a>
+                    <a href="/terms" class="hover:text-white transition-colors">
+                        Terms of Use
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer svg {
+        fill: currentColor;
+    }
+</style>

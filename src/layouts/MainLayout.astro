@@ -1,0 +1,40 @@
+---
+import '../styles/global.css';
+import MainMenu from '../components/menus/MainMenu.astro';
+import FooterMenu from '../components/menus/MainFooter.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+		<title>Marlon Ausby II</title>
+	</head>
+	<body>
+		<div class="mesh-background"></div>
+		<MainMenu currentPath={Astro.url.pathname} />
+		<slot />
+		<FooterMenu />
+	</body>
+</html>
+
+<style>
+	html {
+		margin: 0;
+		background-color:#00070d;
+	}
+	body {
+		margin: 0;
+		background:transparent;
+		color: #ffffff;
+		width: 100%;
+		min-height: 100%;
+		font-family: 'Geist', monospace;
+	}
+</style>
