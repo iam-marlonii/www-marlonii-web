@@ -1,13 +1,14 @@
 ---
-// Terminal component wrapper
+// Interactive terminal component. Browser-only behavior lives in `./terminal.ts`,
+// which is loaded by the inline <script> below. This file stays static-only on
+// the server side.
 ---
 
 <div id="terminal-container" class="terminal-container"></div>
 
 <script>
 	import { Terminal } from './terminal';
-	
-	// Initialize terminal when DOM is ready
+
 	function initTerminal() {
 		const container = document.getElementById('terminal-container');
 		if (container) {
@@ -15,7 +16,6 @@
 		}
 	}
 
-	// Wait for DOM to be ready
 	if (document.readyState === 'loading') {
 		document.addEventListener('DOMContentLoaded', initTerminal);
 	} else {
@@ -25,71 +25,83 @@
 
 <style>
 	.terminal-container {
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
 		width: 100%;
-		min-width:1080px;
 		max-width: 1280px;
+		/* Responsive height:
+		   - Minimum 280px so it's never useless on very short landscape phones
+		   - Targets ~60% of the small viewport height (dvh respects mobile URL bars)
+		   - Caps at 720px so it doesn't dominate huge 4K displays */
+		height: clamp(280px, 60svh, 720px);
+		max-height: clamp(280px, 60svh, 720px);
+		padding: clamp(10px, 2.5vw, 20px);
+		overflow: hidden;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: clamp(12px, 0.85rem + 0.35vw, 16px);
+		line-height: 1.55;
+		color: #ffffff;
+		caret-color: #69d7f2;
 		background-color: rgba(10, 10, 10, 0.95);
 		backdrop-filter: blur(100px);
 		-webkit-backdrop-filter: blur(100px);
 		border: 2px solid rgba(105, 215, 242, 0.3);
-		border-radius: 20px;
-		padding: 20px;
-		font-family: 'JetBrains Mono', monospace;
-		font-size: 14px;
-		color: #ffffff;
-		caret-color: #69D7F2;
-		caret-shape: block;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-		overflow-y: auto;
-		height: 60vh;
+		border-radius: clamp(10px, 2vw, 20px);
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 	}
 
-	.terminal-output {
+	/* Phones */
+	@media (max-width: 639px) {
+		.terminal-container {
+			height: clamp(240px, 55svh, 480px);
+			max-height: clamp(240px, 55svh, 480px);
+			border-radius: 12px;
+			padding: 10px 12px;
+		}
+	}
+
+	/* Short landscape (laptops / phones rotated) — keep terminal usable */
+	@media (max-height: 600px) and (orientation: landscape) {
+		.terminal-container {
+			height: 70svh;
+			max-height: 70svh;
+		}
+	}
+
+	/* Ultrawide / very large monitors — bump max width up a bit so it doesn't
+	   feel lost in the middle of a 4K screen. */
+	@media (min-width: 1920px) {
+		.terminal-container {
+			max-width: 1440px;
+		}
+	}
+
+	:global(#terminal-output) {
 		flex: 1;
 		min-height: 0;
-		/* overflow-y: scroll;
-		overflow-x: hidden;
-		overflow: auto; */
+		overflow-y: auto;
+		overflow-x: auto;
 		margin-bottom: 10px;
 		line-height: 1.6;
 	}
 
-	.terminal-output::-webkit-scrollbar {
+	:global(#terminal-output)::-webkit-scrollbar {
 		width: 8px;
 	}
-
-	:global(#terminal-output) {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: auto;
-  margin-bottom: 10px;
-  line-height: 1.6;
-}
-
-:global(.terminal-line.terminal-banner) {
-  white-space: pre;
-  word-wrap: normal;
-}
-
-	.terminal-output::-webkit-scrollbar-track {
+	:global(#terminal-output)::-webkit-scrollbar-track {
 		background: rgba(105, 215, 242, 0.1);
 		border-radius: 4px;
 	}
-
-	.terminal-output::-webkit-scrollbar-thumb {
+	:global(#terminal-output)::-webkit-scrollbar-thumb {
 		background: rgba(105, 215, 242, 0.3);
 		border-radius: 4px;
 	}
-
-	.terminal-output::-webkit-scrollbar-thumb:hover {
+	:global(#terminal-output)::-webkit-scrollbar-thumb:hover {
 		background: rgba(105, 215, 242, 0.5);
 	}
 
-	.terminal-line {
+	:global(.terminal-line) {
 		margin-bottom: 4px;
 		word-wrap: break-word;
 	}
@@ -98,77 +110,57 @@
 		color: #69d7f2 !important;
 	}
 
-	.terminal-input-line {
+	:global(.terminal-line.terminal-banner) {
+		white-space: pre;
+		word-wrap: normal;
+	}
+
+	:global(.terminal-input-line) {
 		display: flex;
 		align-items: center;
 		gap: 8px;
 	}
 
 	:global(.terminal-prompt) {
-		color: #69D7F2 !important;
+		color: #69d7f2 !important;
 		flex-shrink: 0;
 	}
 
-	.terminal-input {
+	:global(.terminal-input) {
 		appearance: none;
 		-webkit-appearance: none;
-		-moz-appearance:none;
+		-moz-appearance: none;
 		background: transparent;
-		border: 0px;
-		border-color: transparent;
+		border: 0;
 		outline: none;
 		box-shadow: none;
-		color: #69D7F2;
-		-webkit-text-fill-color: #69D7F2;
-		caret-shape: block;
-		font-family: 'JetBrains Mono', monospace;
-		font-size: 14px;
+		color: #69d7f2;
+		-webkit-text-fill-color: #69d7f2;
+		caret-color: #69d7f2;
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
 		flex: 1;
-		min-width: 20px;
-		caret-color: #69D7F2;
+		min-width: 0;
 	}
 
-	.terminal-input:focus,
-	.terminal-input:focus-visible {
+	:global(.terminal-input:focus),
+	:global(.terminal-input:focus-visible) {
 		outline: none !important;
-		outline-width: 0 !important;
-		outline-style: none !important;
 		box-shadow: none !important;
 		border: none !important;
 	}
 
-	/* Higher specificity so browser default focus ring is overridden (e.g. Safari) */
-	#terminal-container .terminal-input:focus,
-	#terminal-container .terminal-input:focus-visible {
-		outline: none !important;
-		outline-width: 0 !important;
-		outline-style: none !important;
-		box-shadow: none !important;
-		border: none !important;
-	}
-
-	.terminal-input::placeholder {
+	:global(.terminal-input::placeholder) {
 		color: rgba(105, 215, 242, 0.5);
 	}
 
-	/* Optional: Add a visual indicator when terminal is active */
-	.terminal-container:focus-within .terminal-prompt {
-		text-shadow: 0 0 8px rgba(105, 215, 242, 0.5);
-	}
-
-	@keyframes blink {
-		0%, 50% {
-			opacity: 1;
-		}
-		51%, 100% {
-			opacity: 0;
-		}
-	}
-
-	/* Focus state */
 	.terminal-container:focus-within {
 		border-color: rgba(105, 215, 242, 0.6);
 		box-shadow: 0 4px 20px rgba(105, 215, 242, 0.2);
 	}
-</style>
 
+	.terminal-container:focus-within :global(.terminal-prompt) {
+		text-shadow: 0 0 8px rgba(105, 215, 242, 0.5);
+	}
+</style>
