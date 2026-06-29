@@ -116,14 +116,11 @@ const navItems = [
 			</button>
 
 			<a
-				href="/cheesecake"
+				href="www.the7thlab.com"
 				class:list={[
-					'hidden sm:flex relative items-center z-10 px-4 py-1 rounded-full cursor-pointer text-sm text-(--color-limeCream) bg-black border-2 border-(--color-limeCream)/30 hover:border-(--color-limeCream) transition-colors duration-200',
-					isActive('/cheesecake') ? 'nav-link-active-cheesecake' : 'bg-(--color-limeCream)/40',
-				]}
-				aria-current={isActive('/cheesecake') ? 'page' : undefined}
+					'hidden sm:flex relative items-center z-10 px-4 py-1 rounded-full cursor-pointer text-sm text-(--color-Vermilion) bg-black border-2 border-(--color-Vermilion)/30 hover:border-(--color-Vermilion) transition-colors duration-200']}
 			>
-				Cheesecake
+				The 7th Lab
 			</a>
 
 			<!-- Mobile hamburger (phones only) -->
@@ -165,14 +162,12 @@ const navItems = [
 				</a>
 			))}
 			<a
-				href="/cheesecake"
+				href="https://the7thlab.com"
 				class:list={[
-					'mobile-nav-link mobile-nav-link-cheesecake',
-					isActive('/cheesecake') && 'mobile-nav-link-active-cheesecake',
+					'mobile-nav-link mobile-nav-link-cheesecake'
 				]}
-				aria-current={isActive('/cheesecake') ? 'page' : undefined}
 			>
-				Cheesecake
+				The 7th Lab
 			</a>
 			<button
 				id="mobile-terminal-toggle"
@@ -198,7 +193,7 @@ const navItems = [
 		background-color: color-mix(in srgb, var(--color-skyBlue) 40%, transparent);
 	}
 	.nav-link-active-cheesecake {
-		background-color: color-mix(in srgb, var(--color-limeCream) 60%, transparent);
+		background-color: color-mix(in srgb, var(--color-Vermilion) 60%, transparent);
 	}
 
 	.mobile-nav-link {
@@ -222,10 +217,10 @@ const navItems = [
 		background-color: color-mix(in srgb, var(--color-skyBlue) 35%, transparent);
 	}
 	.mobile-nav-link-cheesecake {
-		color: var(--color-limeCream);
+		color: var(--color-Vermilion);
 	}
 	.mobile-nav-link-active-cheesecake {
-		background-color: color-mix(in srgb, var(--color-limeCream) 35%, transparent);
+		background-color: color-mix(in srgb, var(--color-Vermilion) 35%, transparent);
 	}
 </style>
 
